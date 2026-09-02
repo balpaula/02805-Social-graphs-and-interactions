@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 01 · Mapping the Marvel Network · Varmel</title>
+<meta name="description" content="Week 1 of 02805 Social Graphs: loading the frozen Marvel Wikipedia snapshot, plotting degree distributions, and looking for the islands outside the giant component.">
+<meta name="color-scheme" content="dark">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Week 01 · Mapping the Marvel Network">
+<meta property="og:description" content="What we asked, what we did, one figure, what surprised us.">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%231d0f0d'/><circle cx='16' cy='16' r='10' fill='none' stroke='%23b8574a' stroke-width='1.5'/><circle cx='16' cy='5' r='3' fill='%23e0523f'/><circle cx='26' cy='21' r='2.6' fill='%236aa6d8'/><circle cx='16' cy='16' r='3' fill='%23f7efe9'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<a class="skip-link sans" href="#main">Skip to content</a>
+
+<div class="page">
+
+  <!-- ===================== NAV ===================== -->
+  <header class="site-nav">
+    <div class="site-nav__brand">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <circle cx="15" cy="15" r="13" stroke="var(--line)" stroke-width="1"></circle>
+        <circle cx="15" cy="15" r="8" stroke="var(--line)" stroke-width="1"></circle>
+        <circle cx="15" cy="4" r="2" fill="var(--accent)"></circle>
+        <circle cx="15" cy="15" r="2.2" fill="var(--accent2)"></circle>
+        <circle cx="24" cy="19" r="1.6" fill="var(--text)"></circle>
+      </svg>
+      <a class="sans site-nav__name" href="../index.html" data-site="team-name">Varmel</a>
+    </div>
+    <nav class="sans site-nav__links" aria-label="Main">
+      <a href="../index.html">Home</a>
+      <a class="is-current" href="../index.html#posts">Posts</a>
+      <a href="../index.html#team">Team</a>
+      <a href="https://github.com/balpaula/02805-Social-graphs-and-interactions" data-site="repo-link">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="main">
+
+  <!-- ===================== POST HEADER ===================== -->
+  <article>
+  <header class="post-header">
+    <div class="post-header__inner">
+      <div class="post-header__kicker">
+        <span class="sans post-header__week">Week 01</span>
+        <span class="sans post-header__theme">Degree distributions</span>
+      </div>
+
+      <h1 class="serif post-header__title">Mapping the Marvel Network</h1>
+
+      <p class="post-header__dek">Bootstrap edition: we load the frozen snapshot of Wikipedia&rsquo;s Marvel superheroes, count who links to whom, and see what the shape of the degree distribution already gives away.</p>
+
+      <div class="sans post-header__meta">
+        <span><span class="todo">todo</span>Published [date]</span>
+        <span>By <span data-site="team-name">Varmel</span></span>
+        <span>Dataset: week-1 release · 303 nodes · 1,784 directed edges</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== POST BODY ===================== -->
+  <div class="post-body">
+    <div class="post-body__inner">
+
+      <div class="callout">
+        <div class="sans callout__label">Placeholder post</div>
+        <p>This is the skeleton we publish before the real write-up lands. Every <span class="todo">todo</span> below marks something to replace: our own question, our own figures, our own numbers. The structure — <strong>what we asked → what we did → one figure → what surprised us</strong> — is the one the course asks for, so it stays.</p>
+      </div>
+
+      <h2>What we asked</h2>
+      <p><span class="todo">todo</span> One sentence, sharp enough that a figure can answer it. The obvious week-1 candidates, to be narrowed down:</p>
+      <ul>
+        <li>Who is linked to the most, who links out the most — and <em>why are those different characters?</em></li>
+        <li>Does the in-degree distribution have a heavy tail while the out-degree distribution does not, and what would that say about how each kind of edge comes to exist?</li>
+        <li>What lives outside the giant component — and are the 17 isolates isolated for a reason, or just badly written articles?</li>
+      </ul>
+
+      <h2>The data</h2>
+      <p>The shared playground: every character in Wikipedia&rsquo;s <em>Category:Marvel Comics superheroes</em>, with a directed edge <code>A → B</code> whenever article A links to article B. We use the frozen week-1 release so that every group in the course computes on identical data.</p>
+
+      <div class="stat-row">
+        <div class="stat"><div class="stat__value">303</div><div class="stat__label">Characters</div></div>
+        <div class="stat"><div class="stat__value">1,784</div><div class="stat__label">Directed links</div></div>
+        <div class="stat"><div class="stat__value">17</div><div class="stat__label">Isolates</div></div>
+        <div class="stat"><div class="stat__value"><span class="todo">todo</span></div><div class="stat__label">Giant component</div></div>
+      </div>
+
+      <p>The one trap the course warns about: a careless load builds the graph from the edge list alone and silently drops the 17 characters with no link in either direction. We add the node roster first, then the edges.</p>
+
+      <pre><code>import pandas as pd
+import networkx as nx
+
+nodes = pd.read_csv("Data/week1_nodes.tsv", sep="\t", comment="#")
+edges = pd.read_csv("Data/week1_edges.tsv", sep="\t", comment="#",
+                    names=["source", "target"])
+
+G = nx.DiGraph()
+G.add_nodes_from(nodes.node_id)                     # all 303 — isolates included
+G.add_edges_from(edges.itertuples(index=False, name=None))
+
+print(G.number_of_nodes(), G.number_of_edges())     # 303 1784
+print(sum(1 for n in G if G.degree(n) == 0))        # 17 isolates</code></pre>
+
+      <h2>What we did</h2>
+      <p><span class="todo">todo</span> A short, honest account of the path — including the dead ends. Roughly:</p>
+      <ol>
+        <li>Loaded the snapshot as a directed graph, isolates and all, and sanity-checked <code>n</code>, <code>m</code>, <code>&lt;k&gt;</code> and the density against the numbers on the course page.</li>
+        <li>Plotted the degree distribution on linear axes, then on log&ndash;log axes with the <code>k+1</code> shift so the 17 isolates survive the log axis.</li>
+        <li>Split in-degree from out-degree and compared the two tails.</li>
+        <li>Drew the network — force layout, node size by degree — and separately went looking for the components outside the giant one.</li>
+      </ol>
+
+      <h2>One figure</h2>
+      <p><span class="todo">todo</span> Replace the placeholder with the figure that actually answers the question. Save plots to <code>assets/img/</code> and swap the block below for an <code>&lt;img&gt;</code>.</p>
+
+      <figure>
+        <div class="figure-placeholder">
+          <div class="sans figure-placeholder__label">Figure 1</div>
+          <div class="figure-placeholder__hint">Degree distribution, linear vs. log&ndash;log. Drop the exported PNG in <code>assets/img/</code> and replace this block with an image.</div>
+        </div>
+        <figcaption>Fig. 1 — <span class="todo">todo</span> Caption: state what the reader should see, and what they should <em>not</em> conclude from it.</figcaption>
+      </figure>
+
+      <figure>
+        <div class="figure-placeholder">
+          <div class="sans figure-placeholder__label">Figure 2</div>
+          <div class="figure-placeholder__hint">The network drawn: force layout, node size by degree. What here is data, and what is layout?</div>
+        </div>
+        <figcaption>Fig. 2 — <span class="todo">todo</span> Caption.</figcaption>
+      </figure>
+
+      <h3>Top of the tail</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Character</th><th>In-degree</th><th>Out-degree</th><th>Note</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>[character]</td><td>—</td><td>—</td><td><span class="todo">todo</span></td></tr>
+            <tr><td>[character]</td><td>—</td><td>—</td><td><span class="todo">todo</span></td></tr>
+            <tr><td>[character]</td><td>—</td><td>—</td><td><span class="todo">todo</span></td></tr>
+            <tr><td>[character]</td><td>—</td><td>—</td><td><span class="todo">todo</span></td></tr>
+            <tr><td>[character]</td><td>—</td><td>—</td><td><span class="todo">todo</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>What surprised us</h2>
+      <p><span class="todo">todo</span> The part worth reading. One thing we did not expect, and what we think explains it — with the alternative explanation we could not rule out.</p>
+
+      <blockquote>[The one-line takeaway of the week goes here.]</blockquote>
+
+      <h2>Caveats</h2>
+      <ul>
+        <li>The network is a snapshot of Wikipedia, not of the Marvel universe: an edge means an editor wrote a link, which tracks fame and article length as much as it tracks the story.</li>
+        <li>Category membership is a human judgement call — who counts as a &ldquo;superhero&rdquo; is already an analysis decision made before we saw the data.</li>
+        <li><span class="todo">todo</span> Anything our own method assumed away.</li>
+      </ul>
+
+      <h2>Reproduce it</h2>
+      <p><span class="todo">todo</span> Link the notebook once it is in the repo — <code>notebooks/week1.ipynb</code> — and note the exact package versions. Data: the week-1 release from the course data page (frozen snapshot, 2026-08-26).</p>
+
+    </div>
+  </div>
+  </article>
+
+  <nav class="sans post-nav" aria-label="Post navigation">
+    <a href="../index.html#posts">← All posts</a>
+    <span style="color:var(--muted); font-weight:400;">Week 02 · coming soon</span>
+  </nav>
+
+  </main>
+
+  <div class="spacer"></div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer" style="margin-top:64px;">
+    <div class="sans site-footer__note">© <span data-site="team-name">Varmel</span> · 02805 Social Graphs and Interactions · DTU</div>
+    <a href="https://github.com/balpaula/02805-Social-graphs-and-interactions" class="sans site-footer__link" data-site="repo-link">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+      <span data-site="repo-label">balpaula/02805-Social-graphs-and-interactions</span>
+    </a>
+  </footer>
+
+</div>
+
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

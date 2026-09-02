@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Varmel · Marvel Universe Network Atlas</title>
+<meta name="description" content="Weekly network-science posts on the Marvel Wikipedia network — 303 characters, 1,784 links — for 02805 Social Graphs and Interactions at DTU.">
+<meta name="color-scheme" content="dark">
+
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Varmel · Marvel Universe Network Atlas">
+<meta property="og:description" content="Every week we trace how 303 Marvel superheroes link to one another on Wikipedia.">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%231d0f0d'/><circle cx='16' cy='16' r='10' fill='none' stroke='%23b8574a' stroke-width='1.5'/><circle cx='16' cy='5' r='3' fill='%23e0523f'/><circle cx='26' cy='21' r='2.6' fill='%236aa6d8'/><circle cx='16' cy='16' r='3' fill='%23f7efe9'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip-link sans" href="#main">Skip to content</a>
+
+<div class="page">
+
+  <!-- ===================== NAV ===================== -->
+  <header class="site-nav">
+    <div class="site-nav__brand">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <circle cx="15" cy="15" r="13" stroke="var(--line)" stroke-width="1"></circle>
+        <circle cx="15" cy="15" r="8" stroke="var(--line)" stroke-width="1"></circle>
+        <circle cx="15" cy="4" r="2" fill="var(--accent)"></circle>
+        <circle cx="15" cy="15" r="2.2" fill="var(--accent2)"></circle>
+        <circle cx="24" cy="19" r="1.6" fill="var(--text)"></circle>
+      </svg>
+      <a class="sans site-nav__name" href="index.html" data-site="team-name">Varmel</a>
+    </div>
+    <nav class="sans site-nav__links" aria-label="Main">
+      <a class="is-current" href="index.html">Home</a>
+      <a href="#posts">Posts</a>
+      <a href="#team">Team</a>
+      <a href="https://github.com/balpaula/02805-Social-graphs-and-interactions" data-site="repo-link">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="main">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="hero__glow"></div>
+
+    <svg class="hero__art hero__art--eye-right" viewBox="-260 -150 520 300" fill="none">
+      <polygon points="250.0,0.0 248.2,10.7 242.6,23.9 233.6,38.0 221.1,52.4 205.6,66.6 187.2,80.3 166.3,93.1 143.4,104.8 119.0,115.1 93.6,123.8 67.9,130.8 42.7,135.9 19.0,139.0 0.0,140.0 -19.0,139.0 -42.7,135.9 -67.9,130.8 -93.6,123.8 -119.0,115.1 -143.4,104.8 -166.3,93.1 -187.2,80.3 -205.6,66.6 -221.1,52.4 -233.6,38.0 -242.6,23.9 -248.2,10.7 -250.0,0.0 -248.2,-10.7 -242.6,-23.9 -233.6,-38.0 -221.1,-52.4 -205.6,-66.6 -187.2,-80.3 -166.3,-93.1 -143.4,-104.8 -119.0,-115.1 -93.6,-123.8 -67.9,-130.8 -42.7,-135.9 -19.0,-139.0 -0.0,-140.0 19.0,-139.0 42.7,-135.9 67.9,-130.8 93.6,-123.8 119.0,-115.1 143.4,-104.8 166.3,-93.1 187.2,-80.3 205.6,-66.6 221.1,-52.4 233.6,-38.0 242.6,-23.9 248.2,-10.7" fill="var(--eye-fill)" stroke="var(--eye-line)" stroke-width="4" stroke-linejoin="round"></polygon>
+        <circle cx="250" cy="0.0" r="3.2" fill="var(--web-node)" opacity="0.8"></circle>
+        <circle cx="-250" cy="0.0" r="3.2" fill="var(--web-node)" opacity="0.8"></circle>
+        <circle cx="0.0" cy="-140" r="3.2" fill="var(--web-node)" opacity="0.8"></circle>
+        <circle cx="0.0" cy="140" r="3.2" fill="var(--web-node)" opacity="0.8"></circle>
+    </svg><svg class="hero__art hero__art--eye-left" viewBox="-260 -150 520 300" fill="none">
+      <polygon points="250.0,0.0 248.2,10.7 242.6,23.9 233.6,38.0 221.1,52.4 205.6,66.6 187.2,80.3 166.3,93.1 143.4,104.8 119.0,115.1 93.6,123.8 67.9,130.8 42.7,135.9 19.0,139.0 0.0,140.0 -19.0,139.0 -42.7,135.9 -67.9,130.8 -93.6,123.8 -119.0,115.1 -143.4,104.8 -166.3,93.1 -187.2,80.3 -205.6,66.6 -221.1,52.4 -233.6,38.0 -242.6,23.9 -248.2,10.7 -250.0,0.0 -248.2,-10.7 -242.6,-23.9 -233.6,-38.0 -221.1,-52.4 -205.6,-66.6 -187.2,-80.3 -166.3,-93.1 -143.4,-104.8 -119.0,-115.1 -93.6,-123.8 -67.9,-130.8 -42.7,-135.9 -19.0,-139.0 -0.0,-140.0 19.0,-139.0 42.7,-135.9 67.9,-130.8 93.6,-123.8 119.0,-115.1 143.4,-104.8 166.3,-93.1 187.2,-80.3 205.6,-66.6 221.1,-52.4 233.6,-38.0 242.6,-23.9 248.2,-10.7" fill="var(--eye-fill)" stroke="var(--eye-line)" stroke-width="4" stroke-linejoin="round"></polygon>
+        <circle cx="250" cy="0.0" r="3.2" fill="var(--web-node)" opacity="0.8"></circle>
+        <circle cx="-250" cy="0.0" r="3.2" fill="var(--web-node)" opacity="0.8"></circle>
+        <circle cx="0.0" cy="-140" r="3.2" fill="var(--web-node)" opacity="0.8"></circle>
+        <circle cx="0.0" cy="140" r="3.2" fill="var(--web-node)" opacity="0.8"></circle>
+    </svg>
+
+    <svg class="hero__art hero__art--web" viewBox="0 0 1280 760" preserveAspectRatio="xMidYMid slice" fill="none">
+        <line x1="940.0" y1="90.0" x2="1008.6" y2="62.7" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1008.6" y1="62.7" x2="1064.7" y2="55.2" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="940.0" y1="90.0" x2="994.1" y2="144.6" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="994.1" y1="144.6" x2="1044.1" y2="189.0" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="940.0" y1="90.0" x2="850.8" y2="171.0" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="850.8" y1="171.0" x2="808.4" y2="204.9" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="940.0" y1="90.0" x2="863.7" y2="64.0" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="863.7" y1="64.0" x2="778.9" y2="40.9" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="940.0" y1="90.0" x2="916.2" y2="-23.2" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="916.2" y1="-23.2" x2="891.6" y2="-74.5" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1150.0" y1="260.0" x2="1106.7" y2="175.3" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1106.7" y1="175.3" x2="1074.3" y2="100.3" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1150.0" y1="260.0" x2="1221.0" y2="205.5" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1221.0" y1="205.5" x2="1292.8" y2="156.7" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1150.0" y1="260.0" x2="1286.6" y2="318.0" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1286.6" y1="318.0" x2="1365.4" y2="326.6" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1150.0" y1="260.0" x2="1154.2" y2="383.4" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1154.2" y1="383.4" x2="1139.1" y2="472.2" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1150.0" y1="260.0" x2="1034.0" y2="269.0" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1034.0" y1="269.0" x2="925.8" y2="281.0" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1040.0" y1="470.0" x2="1015.6" y2="356.4" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1015.6" y1="356.4" x2="1009.7" y2="275.4" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1040.0" y1="470.0" x2="1182.6" y2="442.1" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1182.6" y1="442.1" x2="1271.1" y2="414.3" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1040.0" y1="470.0" x2="1040.2" y2="571.8" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1040.2" y1="571.8" x2="1013.7" y2="652.3" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1040.0" y1="470.0" x2="940.1" y2="500.4" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="940.1" y1="500.4" x2="843.9" y2="525.7" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="860.0" y1="620.0" x2="936.2" y2="584.5" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="936.2" y1="584.5" x2="989.3" y2="544.7" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="860.0" y1="620.0" x2="935.8" y2="690.5" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="935.8" y1="690.5" x2="1007.3" y2="744.6" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="860.0" y1="620.0" x2="784.5" y2="712.5" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="784.5" y1="712.5" x2="745.2" y2="749.2" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="860.0" y1="620.0" x2="745.6" y2="550.5" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="745.6" y1="550.5" x2="675.9" y2="515.7" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="860.0" y1="620.0" x2="847.6" y2="545.6" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="847.6" y1="545.6" x2="824.3" y2="488.9" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1180.0" y1="600.0" x2="1072.7" y2="548.3" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1072.7" y1="548.3" x2="1008.6" y2="540.6" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1180.0" y1="600.0" x2="1231.7" y2="493.7" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1231.7" y1="493.7" x2="1256.0" y2="441.0" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1180.0" y1="600.0" x2="1272.6" y2="620.8" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1272.6" y1="620.8" x2="1375.0" y2="615.4" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1180.0" y1="600.0" x2="1159.6" y2="684.0" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1159.6" y1="684.0" x2="1118.0" y2="746.8" stroke="var(--web)" stroke-width="2.4" opacity="0.95"></line>
+        <line x1="1154.2" y1="383.4" x2="1231.7" y2="493.7" stroke="var(--web)" stroke-width="1.8" opacity="0.7"></line>
+        <line x1="940.1" y1="500.4" x2="847.6" y2="545.6" stroke="var(--web)" stroke-width="1.8" opacity="0.7"></line>
+        <line x1="847.6" y1="545.6" x2="824.3" y2="488.9" stroke="var(--web)" stroke-width="1.8" opacity="0.7"></line>
+        <line x1="1034.0" y1="269.0" x2="1015.6" y2="356.4" stroke="var(--web)" stroke-width="1.8" opacity="0.7"></line>
+        <line x1="850.8" y1="171.0" x2="925.8" y2="281.0" stroke="var(--web)" stroke-width="1.8" opacity="0.7"></line>
+        <line x1="936.2" y1="584.5" x2="989.3" y2="544.7" stroke="var(--web)" stroke-width="1.8" opacity="0.7"></line>
+        <line x1="1072.7" y1="548.3" x2="989.3" y2="544.7" stroke="var(--web)" stroke-width="1.8" opacity="0.7"></line>
+        <line x1="1015.6" y1="356.4" x2="925.8" y2="281.0" stroke="var(--web)" stroke-width="1.8" opacity="0.7"></line>
+        <circle cx="1008.6" cy="62.7" r="2.2" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="994.1" cy="144.6" r="2.2" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="1044.1" cy="189.0" r="3.0" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="850.8" cy="171.0" r="2.2" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="808.4" cy="204.9" r="2.5" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="863.7" cy="64.0" r="2.2" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="778.9" cy="40.9" r="3.2" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="916.2" cy="-23.2" r="2.3" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="891.6" cy="-74.5" r="3.1" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="1106.7" cy="175.3" r="1.9" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="1221.0" cy="205.5" r="2.5" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="1286.6" cy="318.0" r="2.4" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="1365.4" cy="326.6" r="2.9" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="1154.2" cy="383.4" r="2.5" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="1139.1" cy="472.2" r="3.2" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="1034.0" cy="269.0" r="2.5" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="925.8" cy="281.0" r="3.1" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="1015.6" cy="356.4" r="2.3" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="1182.6" cy="442.1" r="2.1" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="1271.1" cy="414.3" r="2.6" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="1040.2" cy="571.8" r="1.8" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="1013.7" cy="652.3" r="2.6" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="940.1" cy="500.4" r="2.6" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="936.2" cy="584.5" r="2.1" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="989.3" cy="544.7" r="2.6" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="935.8" cy="690.5" r="2.6" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="784.5" cy="712.5" r="2.5" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="745.6" cy="550.5" r="1.7" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="847.6" cy="545.6" r="1.9" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="824.3" cy="488.9" r="2.2" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="1072.7" cy="548.3" r="2.0" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="1231.7" cy="493.7" r="2.1" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="1272.6" cy="620.8" r="2.3" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="1375.0" cy="615.4" r="3.2" fill="var(--web-node)" opacity="0.7"></circle>
+        <circle cx="1159.6" cy="684.0" r="2.3" fill="var(--line-node)" opacity="0.7"></circle>
+        <circle cx="940.0" cy="90.0" r="6.2" fill="var(--accent)"></circle>
+        <circle cx="1150.0" cy="260.0" r="6.2" fill="var(--accent2)"></circle>
+        <circle cx="1040.0" cy="470.0" r="4.9" fill="var(--text)"></circle>
+        <circle cx="860.0" cy="620.0" r="5.0" fill="var(--accent)"></circle>
+        <circle cx="1180.0" cy="600.0" r="5.1" fill="var(--accent2)"></circle>
+    </svg>
+
+    <div class="hero__vignette"></div>
+
+    <div class="hero__content">
+      <div class="sans hero__course">02805 Social Graphs and Interactions · DTU</div>
+
+      <div class="hero__title-box">
+        <h1 class="display hero__title">Atlas</h1>
+      </div>
+
+      <p class="hero__lede">Every week we trace how 303 Marvel superheroes link to one another on Wikipedia — assembling their network one connection at a time.</p>
+      <div class="hero__meta">
+        <div class="sans hero__byline" data-site="team-name">Varmel</div>
+        <div class="sans hero__stats">303 heroes · 1,784 links</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== THE WEEKS ===================== -->
+  <section class="section" id="weeks">
+    <div class="sans eyebrow">The syllabus</div>
+    <h2 class="serif section__title">The weeks</h2>
+
+    <p class="sans section__note">The course runs as a <em>flipped classroom</em>: in class we work through a page of carefully designed material. Weeks 1&ndash;4 are the networks half, weeks 5&ndash;7 the language half, and week 8 combines everything.</p>
+    <p class="sans section__note section__note--last">Every week ends with a <strong>Go nuts with your LLM</strong> exercise — a free-form, agent-powered analysis of the shared Marvel dataset, published here as a post. Weeks 9&ndash;13 are the project period.</p>
+
+    <div class="weeks-figure">
+      <div class="sans weeks-figure__label" id="week-label">Week 1 of 8</div>
+
+      <svg width="640" height="495" viewBox="-220 -170 440 340" fill="none">
+        <circle id="body-glow" cx="0" cy="0" r="34" fill="var(--accent2)" opacity="0"></circle>
+      <line x1="0" y1="0" x2="-61.5" y2="-48.0" id="leg1-line1" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <line x1="-61.5" y1="-48.0" x2="-120.6" y2="-123.7" id="leg1-line2" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <circle cx="-120.6" cy="-123.7" r="20" fill="var(--accent)" id="leg1-glow" opacity="0"></circle>
+      <circle cx="-120.6" cy="-123.7" id="leg1-foot" r="5" fill="var(--bg-panel)" stroke="var(--line)" stroke-width="1.5"></circle>
+      <line x1="0" y1="0" x2="-76.0" y2="-17.5" id="leg2-line1" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <line x1="-76.0" y1="-17.5" x2="-161.5" y2="-61.1" id="leg2-line2" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <circle cx="-161.5" cy="-61.1" r="20" fill="var(--accent)" id="leg2-glow" opacity="0"></circle>
+      <circle cx="-161.5" cy="-61.1" id="leg2-foot" r="5" fill="var(--bg-panel)" stroke="var(--line)" stroke-width="1.5"></circle>
+      <line x1="0" y1="0" x2="-76.0" y2="17.5" id="leg3-line1" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <line x1="-76.0" y1="17.5" x2="-161.5" y2="61.1" id="leg3-line2" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <circle cx="-161.5" cy="61.1" r="20" fill="var(--accent)" id="leg3-glow" opacity="0"></circle>
+      <circle cx="-161.5" cy="61.1" id="leg3-foot" r="5" fill="var(--bg-panel)" stroke="var(--line)" stroke-width="1.5"></circle>
+      <line x1="0" y1="0" x2="-61.5" y2="48.0" id="leg4-line1" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <line x1="-61.5" y1="48.0" x2="-120.6" y2="123.7" id="leg4-line2" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <circle cx="-120.6" cy="123.7" r="20" fill="var(--accent)" id="leg4-glow" opacity="0"></circle>
+      <circle cx="-120.6" cy="123.7" id="leg4-foot" r="5" fill="var(--bg-panel)" stroke="var(--line)" stroke-width="1.5"></circle>
+      <line x1="0" y1="0" x2="61.5" y2="-48.0" id="leg5-line1" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <line x1="61.5" y1="-48.0" x2="120.6" y2="-123.7" id="leg5-line2" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <circle cx="120.6" cy="-123.7" r="20" fill="var(--accent)" id="leg5-glow" opacity="0"></circle>
+      <circle cx="120.6" cy="-123.7" id="leg5-foot" r="5" fill="var(--bg-panel)" stroke="var(--line)" stroke-width="1.5"></circle>
+      <line x1="0" y1="0" x2="76.0" y2="-17.5" id="leg6-line1" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <line x1="76.0" y1="-17.5" x2="161.5" y2="-61.1" id="leg6-line2" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <circle cx="161.5" cy="-61.1" r="20" fill="var(--accent)" id="leg6-glow" opacity="0"></circle>
+      <circle cx="161.5" cy="-61.1" id="leg6-foot" r="5" fill="var(--bg-panel)" stroke="var(--line)" stroke-width="1.5"></circle>
+      <line x1="0" y1="0" x2="76.0" y2="17.5" id="leg7-line1" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <line x1="76.0" y1="17.5" x2="161.5" y2="61.1" id="leg7-line2" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <circle cx="161.5" cy="61.1" r="20" fill="var(--accent)" id="leg7-glow" opacity="0"></circle>
+      <circle cx="161.5" cy="61.1" id="leg7-foot" r="5" fill="var(--bg-panel)" stroke="var(--line)" stroke-width="1.5"></circle>
+      <line x1="0" y1="0" x2="61.5" y2="48.0" id="leg8-line1" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <line x1="61.5" y1="48.0" x2="120.6" y2="123.7" id="leg8-line2" stroke="var(--line)" stroke-width="1.4" stroke-opacity="0.4" stroke-dasharray="3 5" stroke-linecap="round"></line>
+      <circle cx="120.6" cy="123.7" r="20" fill="var(--accent)" id="leg8-glow" opacity="0"></circle>
+      <circle cx="120.6" cy="123.7" id="leg8-foot" r="5" fill="var(--bg-panel)" stroke="var(--line)" stroke-width="1.5"></circle>
+        <circle id="body-fill" cx="0" cy="0" r="16" fill="var(--line)"></circle>
+        <circle cx="-5" cy="-4" r="2.4" fill="var(--bg)"></circle>
+        <circle cx="5" cy="-4" r="2.4" fill="var(--bg)"></circle>
+      </svg>
+
+      <div id="reveal-caption" class="serif weeks-figure__caption" style="display:none;">A shape starts to appear.</div>
+    </div>
+
+    <div class="week-grid">
+      <div class="week-cell">
+        <div class="sans tag" id="footer-w1-tag">coming</div>
+        <a class="week-cell__title" id="footer-w1-title" href="posts/week1.html">Networks</a>
+      </div>
+      <div class="week-cell">
+        <div class="sans tag" id="footer-w2-tag">coming</div>
+        <div class="week-cell__title" id="footer-w2-title">Models &amp; null models</div>
+      </div>
+      <div class="week-cell">
+        <div class="sans tag" id="footer-w3-tag">coming</div>
+        <div class="week-cell__title" id="footer-w3-title">Who matters, and why</div>
+      </div>
+      <div class="week-cell">
+        <div class="sans tag" id="footer-w4-tag">coming</div>
+        <div class="week-cell__title" id="footer-w4-title">Communities &amp; backbones</div>
+      </div>
+      <div class="week-cell">
+        <div class="sans tag" id="footer-w5-tag">coming</div>
+        <div class="week-cell__title" id="footer-w5-title">The language half &middot; NLP I</div>
+      </div>
+      <div class="week-cell">
+        <div class="sans tag" id="footer-w6-tag">coming</div>
+        <div class="week-cell__title" id="footer-w6-title">NLP II</div>
+      </div>
+      <div class="week-cell">
+        <div class="sans tag" id="footer-w7-tag">coming</div>
+        <div class="week-cell__title" id="footer-w7-title">NLP III</div>
+      </div>
+      <div class="week-cell">
+        <div class="sans tag" id="footer-w8-tag">coming</div>
+        <div class="week-cell__title" id="footer-w8-title">Networks &times; language</div>
+      </div>
+    </div>
+
+    <div class="week-project">
+      <div class="sans tag" id="project-tag">coming</div>
+      <div class="serif week-project__title" id="project-title">Weeks 9&ndash;13 &middot; Project period</div>
+    </div>
+  </section>
+
+  <!-- ===================== TEAM ===================== -->
+  <section class="section" id="team">
+    <div class="sans eyebrow">Who we are</div>
+    <h2 class="serif section__title">The team behind the map</h2>
+    <div class="team-grid">
+      <div class="member">
+        <div class="member__badge member__badge--accent">1</div>
+        <div class="member__name" data-member="1-name">Alvaro Vega</div>
+        <div class="member__role" data-member="1-role">Network analysis</div>
+        <div class="member__links"><a data-member="1-link" href="#">github</a></div>
+      </div>
+      <div class="member">
+        <div class="member__badge member__badge--accent2">2</div>
+        <div class="member__name" data-member="2-name">Oier Garcia</div>
+        <div class="member__role" data-member="2-role">Visualization</div>
+        <div class="member__links"><a data-member="2-link" href="#">github</a></div>
+      </div>
+      <div class="member">
+        <div class="member__badge">3</div>
+        <div class="member__name" data-member="3-name">Paula Balcells</div>
+        <div class="member__role" data-member="3-role">Writing</div>
+        <div class="member__links"><a data-member="3-link" href="#">github</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== POSTS ===================== -->
+  <section class="section" id="posts">
+    <div class="section__head">
+      <div>
+        <div class="sans eyebrow">Logbook</div>
+        <h2 class="serif section__title" style="margin-bottom:0;">Weekly entries</h2>
+      </div>
+      <a href="posts/week1.html" class="sans link-more">Latest post →</a>
+    </div>
+    <p class="sans section__note" style="font-size:13.5px; margin-bottom:32px; max-width:520px;">Each entry is tagged with that week's lecture theme, so the log doubles as a map of the course itself.</p>
+
+    <div class="post-grid">
+
+      <a class="post-card" href="posts/week1.html">
+        <svg width="100%" height="70" viewBox="0 0 220 70" fill="none" aria-hidden="true">
+          <circle cx="110" cy="35" r="30" stroke="var(--line)" stroke-width="1"></circle>
+          <circle cx="110" cy="35" r="16" stroke="var(--line)" stroke-width="1"></circle>
+          <circle cx="110" cy="5" r="3" fill="var(--accent)"></circle>
+          <circle cx="150" cy="50" r="2.6" fill="var(--accent2)"></circle>
+          <circle cx="70" cy="50" r="2.6" fill="var(--text)"></circle>
+          <circle cx="110" cy="35" r="3" fill="var(--text)"></circle>
+        </svg>
+        <div class="post-card__row">
+          <div class="sans post-card__week">Week 01</div>
+          <div class="sans post-card__theme">Degree Distributions</div>
+        </div>
+        <div class="post-card__title">Mapping the Marvel Network</div>
+        <div class="post-card__dek">What we asked → what we did → one figure → what surprised us.</div>
+      </a>
+
+      <div class="post-card post-card--empty">
+        <div class="post-card__row">
+          <div class="sans post-card__week">Week 02</div>
+          <div class="sans post-card__theme">[Lecture theme]</div>
+        </div>
+        <div class="post-card__title">Coming soon</div>
+      </div>
+
+      <div class="post-card post-card--empty">
+        <div class="post-card__row">
+          <div class="sans post-card__week">Week 03</div>
+          <div class="sans post-card__theme">[Lecture theme]</div>
+        </div>
+        <div class="post-card__title">Coming soon</div>
+      </div>
+
+    </div>
+  </section>
+
+  </main>
+
+  <div class="spacer"></div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="sans site-footer__note">© <span data-site="team-name">Varmel</span> · 02805 Social Graphs and Interactions · DTU</div>
+    <a href="https://github.com/balpaula/02805-Social-graphs-and-interactions" class="sans site-footer__link" data-site="repo-link">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+      <span data-site="repo-label">balpaula/02805-Social-graphs-and-interactions</span>
+    </a>
+  </footer>
+
+</div>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>
