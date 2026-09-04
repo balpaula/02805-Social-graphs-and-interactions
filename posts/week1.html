@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Week 01 · Mapping the Marvel Network · Varmel</title>
-<meta name="description" content="Week 1 of 02805 Social Graphs: loading the frozen Marvel Wikipedia snapshot, plotting degree distributions, and looking for the islands outside the giant component.">
+<title>Week 01 · The Frontier of the Marvel Universe · Varmel</title>
+<meta name="description" content="Week 1 of 02805 Social Graphs: the 17 characters with no links at all, the island of nine, and the 18 held on by a single thread — and what it takes to be inside Wikipedia's Marvel universe.">
 <meta name="color-scheme" content="dark">
 
 <meta property="og:type" content="article">
-<meta property="og:title" content="Week 01 · Mapping the Marvel Network">
-<meta property="og:description" content="What we asked, what we did, one figure, what surprised us.">
+<meta property="og:title" content="Week 01 · The Frontier of the Marvel Universe">
+<meta property="og:description" content="Nineteen components. One continent, one island, seventeen castaways — and what it takes to get in.">
 
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%231d0f0d'/><circle cx='16' cy='16' r='10' fill='none' stroke='%23b8574a' stroke-width='1.5'/><circle cx='16' cy='5' r='3' fill='%23e0523f'/><circle cx='26' cy='21' r='2.6' fill='%236aa6d8'/><circle cx='16' cy='16' r='3' fill='%23f7efe9'/></svg>">
 
@@ -51,15 +51,15 @@
     <div class="post-header__inner">
       <div class="post-header__kicker">
         <span class="sans post-header__week">Week 01</span>
-        <span class="sans post-header__theme">Degree distributions</span>
+        <span class="sans post-header__theme">Components &amp; degree</span>
       </div>
 
-      <h1 class="serif post-header__title">Mapping the Marvel Network</h1>
+      <h1 class="serif post-header__title">The frontier of the Marvel universe</h1>
 
-      <p class="post-header__dek">Bootstrap edition: we load the frozen snapshot of Wikipedia&rsquo;s Marvel superheroes, count who links to whom, and see what the shape of the degree distribution already gives away.</p>
+      <p class="post-header__dek">Everybody looks at Spider-Man. We went the other way, to the edge of the map: the seventeen characters with no links at all, the island of nine that never speaks to anyone, and the eighteen holding on by a single thread.</p>
 
       <div class="sans post-header__meta">
-        <span><span class="todo">todo</span>Published [date]</span>
+        <span>Published 4 September 2026</span>
         <span>By <span data-site="team-name">Varmel</span></span>
         <span>Dataset: week-1 release · 303 nodes · 1,784 directed edges</span>
       </div>
@@ -70,103 +70,167 @@
   <div class="post-body">
     <div class="post-body__inner">
 
-      <div class="callout">
-        <div class="sans callout__label">Placeholder post</div>
-        <p>This is the skeleton we publish before the real write-up lands. Every <span class="todo">todo</span> below marks something to replace: our own question, our own figures, our own numbers. The structure — <strong>what we asked → what we did → one figure → what surprised us</strong> — is the one the course asks for, so it stays.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="stat__value">19</div><div class="stat__label">Components</div></div>
+        <div class="stat"><div class="stat__value">277</div><div class="stat__label">In the giant one</div></div>
+        <div class="stat"><div class="stat__value">17</div><div class="stat__label">Castaways</div></div>
+        <div class="stat"><div class="stat__value">30%</div><div class="stat__label">Have 3 links or fewer</div></div>
       </div>
 
       <h2>What we asked</h2>
-      <p><span class="todo">todo</span> One sentence, sharp enough that a figure can answer it. The obvious week-1 candidates, to be narrowed down:</p>
-      <ul>
-        <li>Who is linked to the most, who links out the most — and <em>why are those different characters?</em></li>
-        <li>Does the in-degree distribution have a heavy tail while the out-degree distribution does not, and what would that say about how each kind of edge comes to exist?</li>
-        <li>What lives outside the giant component — and are the 17 isolates isolated for a reason, or just badly written articles?</li>
-      </ul>
 
-      <h2>The data</h2>
-      <p>The shared playground: every character in Wikipedia&rsquo;s <em>Category:Marvel Comics superheroes</em>, with a directed edge <code>A → B</code> whenever article A links to article B. We use the frozen week-1 release so that every group in the course computes on identical data.</p>
+      <p>The obvious week-1 question is who sits at the centre. Spider-Man is linked to by 106 of the other 302 articles, and the answer stops being interesting about ten seconds after you compute it.</p>
 
-      <div class="stat-row">
-        <div class="stat"><div class="stat__value">303</div><div class="stat__label">Characters</div></div>
-        <div class="stat"><div class="stat__value">1,784</div><div class="stat__label">Directed links</div></div>
-        <div class="stat"><div class="stat__value">17</div><div class="stat__label">Isolates</div></div>
-        <div class="stat"><div class="stat__value"><span class="todo">todo</span></div><div class="stat__label">Giant component</div></div>
-      </div>
-
-      <p>The one trap the course warns about: a careless load builds the graph from the edge list alone and silently drops the 17 characters with no link in either direction. We add the node roster first, then the edges.</p>
-
-      <pre><code>import pandas as pd
-import networkx as nx
-
-nodes = pd.read_csv("Data/week1_nodes.tsv", sep="\t", comment="#")
-edges = pd.read_csv("Data/week1_edges.tsv", sep="\t", comment="#",
-                    names=["source", "target"])
-
-G = nx.DiGraph()
-G.add_nodes_from(nodes.node_id)                     # all 303 — isolates included
-G.add_edges_from(edges.itertuples(index=False, name=None))
-
-print(G.number_of_nodes(), G.number_of_edges())     # 303 1784
-print(sum(1 for n in G if G.degree(n) == 0))        # 17 isolates</code></pre>
+      <p>So we asked the opposite question, and it turned out to be the more awkward one: <strong>what does it actually take to be inside Wikipedia's Marvel universe?</strong> The category says 303 characters belong. The link structure disagrees — it quietly leaves twenty-six of them outside, and holds another eighteen by a single thread.</p>
 
       <h2>What we did</h2>
-      <p><span class="todo">todo</span> A short, honest account of the path — including the dead ends. Roughly:</p>
+
       <ol>
-        <li>Loaded the snapshot as a directed graph, isolates and all, and sanity-checked <code>n</code>, <code>m</code>, <code>&lt;k&gt;</code> and the density against the numbers on the course page.</li>
-        <li>Plotted the degree distribution on linear axes, then on log&ndash;log axes with the <code>k+1</code> shift so the 17 isolates survive the log axis.</li>
-        <li>Split in-degree from out-degree and compared the two tails.</li>
-        <li>Drew the network — force layout, node size by degree — and separately went looking for the components outside the giant one.</li>
+        <li>Loaded the frozen week-1 release <strong>roster first, edges second</strong>. Build the graph from the edge list alone and the 17 characters with no link in either direction vanish without an error message — they are exactly the population this post is about.</li>
+        <li>Split the network into connected components and looked at everything that was not the giant one.</li>
+        <li>Read the opening sentence of all 17 castaway articles, because at that point the data had run out and the answer was in the prose.</li>
+        <li>Measured which way the links point at the edge of the network, and compared it with the centre.</li>
+        <li>Went to the live Wikipedia API to try to <strong>disprove</strong> two things: that the isolation is real rather than a harvesting artefact, and that it is not simply explained by "nobody finished writing those articles".</li>
       </ol>
 
-      <h2>One figure</h2>
-      <p><span class="todo">todo</span> Replace the placeholder with the figure that actually answers the question. Save plots to <code>assets/img/</code> and swap the block below for an <code>&lt;img&gt;</code>.</p>
+      <h2>The map</h2>
+
+      <p>Nineteen components: one continent of 277, one island of 9, and seventeen people in the water. There is no archipelago in between — no cluster of three, no pair holding hands. You are either in the universe or entirely out of it.</p>
 
       <figure>
-        <div class="figure-placeholder">
-          <div class="sans figure-placeholder__label">Figure 1</div>
-          <div class="figure-placeholder__hint">Degree distribution, linear vs. log&ndash;log. Drop the exported PNG in <code>assets/img/</code> and replace this block with an image.</div>
-        </div>
-        <figcaption>Fig. 1 — <span class="todo">todo</span> Caption: state what the reader should see, and what they should <em>not</em> conclude from it.</figcaption>
+        <img src="../assets/img/week1_frontier_map.png" alt="The Marvel network drawn as a map: a dense red giant component of 277 characters, a separate gold cluster of nine Strikeforce: Morituri characters, and seventeen isolated blue dots in a grid. Blue threads mark the eighteen characters attached to the giant component by a single link.">
+        <figcaption>Fig. 1 — The whole roster. Red is the giant component, gold is the island, blue is the rim: the 17 castaways and the 18 pendants, each held by one single link (the blue threads). The giant component is laid out on its own; the island and the castaways are placed by hand, because a layout algorithm has nothing to say about nodes with no edges.</figcaption>
       </figure>
 
-      <figure>
-        <div class="figure-placeholder">
-          <div class="sans figure-placeholder__label">Figure 2</div>
-          <div class="figure-placeholder__hint">The network drawn: force layout, node size by degree. What here is data, and what is layout?</div>
-        </div>
-        <figcaption>Fig. 2 — <span class="todo">todo</span> Caption.</figcaption>
-      </figure>
+      <h2>The island: nine characters who only talk to each other</h2>
 
-      <h3>Top of the tail</h3>
+      <p>The second component is nine characters — Backhand, Blackthorn, Radian, Scaredycat, Scatterbrain, Shear, Snapdragon, Toxyn and Vyking — with <strong>22 links among them and not one leaving</strong>. Internally they are denser than the network at large. Externally they do not exist.</p>
+
+      <p>All nine come from <em>Strikeforce: Morituri</em>, a 1986–89 series set in its own continuity. Three of them carry "(Morituri)" in the article title. Nobody in that story ever meets Spider-Man, so no editor ever had a reason to write the link.</p>
+
+      <p>The obvious rival explanation is that these are stubs with no links in them at all. The wiki-source says otherwise:</p>
+
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Character</th><th>In-degree</th><th>Out-degree</th><th>Note</th></tr>
+            <tr><th>Article</th><th>[[links]] in the wiki-source</th><th>To island peers</th><th>To anyone else in the roster</th></tr>
           </thead>
           <tbody>
-            <tr><td>[character]</td><td>—</td><td>—</td><td><span class="todo">todo</span></td></tr>
-            <tr><td>[character]</td><td>—</td><td>—</td><td><span class="todo">todo</span></td></tr>
-            <tr><td>[character]</td><td>—</td><td>—</td><td><span class="todo">todo</span></td></tr>
-            <tr><td>[character]</td><td>—</td><td>—</td><td><span class="todo">todo</span></td></tr>
-            <tr><td>[character]</td><td>—</td><td>—</td><td><span class="todo">todo</span></td></tr>
+            <tr><td>Radian</td><td>76</td><td>6</td><td>0</td></tr>
+            <tr><td>Blackthorn</td><td>28</td><td>1</td><td>0</td></tr>
+            <tr><td>Vyking</td><td>28</td><td>2</td><td>0</td></tr>
+            <tr><td>Shear</td><td>27</td><td>2</td><td>0</td></tr>
+            <tr><td>Scatterbrain</td><td>27</td><td>2</td><td>0</td></tr>
+            <tr><td>Scaredycat</td><td>25</td><td>3</td><td>0</td></tr>
+            <tr><td>Snapdragon</td><td>25</td><td>3</td><td>0</td></tr>
+            <tr><td>Toxyn</td><td>22</td><td>2</td><td>0</td></tr>
+            <tr><td>Backhand</td><td>21</td><td>1</td><td>0</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h2>What surprised us</h2>
-      <p><span class="todo">todo</span> The part worth reading. One thing we did not expect, and what we think explains it — with the alternative explanation we could not rule out.</p>
+      <p>They link out plenty — to the series, the writers, the publisher, the plot. The last column is the finding: <strong>zero, nine times out of nine</strong>. The island is not a gap in the data. It is a narrative border that survived intact into Wikipedia's link structure.</p>
 
-      <blockquote>[The one-line takeaway of the week goes here.]</blockquote>
+      <h2>The seventeen castaways are not one group</h2>
+
+      <p>The isolates have nothing in common as characters. Read their first sentences and they sort themselves into four kinds of outsider:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>How they got in</th><th>Who</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Came from outside Marvel</td><td>Miracleman (British Golden Age, originally Marvelman), Solarman (Pendulum Press), Super Rabbit (Timely), Sean and Chris (NEW-GEN imprint)</td></tr>
+            <tr><td>Born on screen, not on paper</td><td>Baymax (Big Hero 6), Yo-Yo Rodriguez (Agents of S.H.I.E.L.D.)</td></tr>
+            <tr><td>Obscure 1940s–50s</td><td>Breeze Barton, Father Time, Black Fox, Happy Sam Sawyer</td></tr>
+            <tr><td>Scattered rest</td><td>Bird-Brain, Brain Drain, Captain Midlands, Charcoal, Hellfire, Illuminator, Ogre</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Being isolated is not the same as being minor. Baymax headlines a Disney film and has not a single link in either direction.</p>
+
+      <h2>The obvious objection, and how far it gets</h2>
+
+      <p>"They are stubs." That is a real explanation and it deserved a real test, so we pulled the byte size of all 303 articles from the API.</p>
+
+      <p>It is largely right. Article size and degree correlate at ρ = 0.82 across the roster, the castaways' median article is 6.7 kB against 18.0 kB for the connected ones, and the island's articles are smaller still at 4.9 kB. If we had stopped here, the honest headline would have been <em>short articles get few links</em>.</p>
+
+      <figure>
+        <img src="../assets/img/week1_article_size.png" alt="Strip plot of article size in kilobytes, on a log axis, for three groups: the giant component (median 18.0 kB), the Morituri island (4.9 kB) and the 17 castaways (6.7 kB). Miracleman is marked as an outlier at 62 kB with zero links.">
+        <figcaption>Fig. 2 — Article size by group, log axis, one dot per character. The castaways really are small on average. Two of them are not, and those two are the interesting ones.</figcaption>
+      </figure>
+
+      <p>Two castaways refuse to fit. <strong>Miracleman</strong> is a 62 kB article with 440 <code>[[links]]</code> in its wiki-source and zero of them landing on another Marvel superhero. <strong>Baymax</strong> is 24 kB with 120 links and the same zero. For comparison, connected characters with articles in the 20–70 kB band have a median degree of 11 (n = 91). These two have 0.</p>
+
+      <p>Both are exactly the side-door cases from the table above: a character Marvel acquired from another publisher, and a character who arrived from a film. Article length explains the bulk of the rim. It does not explain the doorway.</p>
+
+      <h2>What surprised us: the rim reaches in, the centre never reaches back</h2>
+
+      <p>Eighteen characters hang off the giant component by a single link. We expected the direction of those links to be a coin flip. It is not:</p>
+
+      <ul>
+        <li><strong>15 of the 18 only link out.</strong> One is only linked to. Two go both ways.</li>
+        <li>Their anchors repeat: <strong>five of them hold on to Spider-Man</strong>, two to Doctor Strange.</li>
+      </ul>
+
+      <p>So we checked whether this is a property of the whole network rather than a coincidence in eighteen cases. For every character we computed a <em>polarity</em>: (in − out) / (in + out), which is −1 for someone who only links out and +1 for someone who is only linked to.</p>
+
+      <figure>
+        <img src="../assets/img/week1_polarity.png" alt="Scatter plot of polarity against total degree on a log x-axis. The median line rises from about -0.9 at degree 1 to +0.2 above degree 30, crossing zero around degree 20. The 18 pendants sit at degree 1, fifteen of them at polarity -1.">
+        <figcaption>Fig. 3 — Polarity against degree. Low-degree characters overwhelmingly link out; the median only crosses zero somewhere above degree 20. Spider-Man and Hulk sit near the top: they are almost pure destinations.</figcaption>
+      </figure>
+
+      <p>The gradient is clean. The periphery writes about the centre; the centre does not write back. And it makes editorial sense once you say it out loud: when you write the article for a minor character, you have to explain who they are, which means naming the famous people they fought or joined. When you write Spider-Man, you cannot name everyone — 700 <code>[[links]]</code> in his wiki-source and only 9 of them land on another character in this category.</p>
+
+      <p>That is also why the rim is so heavily populated. 92 of the 303 characters — <strong>30% of the roster</strong> — have three links or fewer.</p>
+
+      <figure>
+        <img src="../assets/img/week1_degree_distributions.png" alt="Two panels. Left: histogram of total degree on linear axes, with the region k ≤ 3 shaded and annotated as 92 characters, 30% of the roster. Right: in-degree and out-degree distributions on log-log axes plotted against k+1, in-degree running to 106 and out-degree stopping at 28.">
+        <figcaption>Fig. 4 — Degree distributions. Left, linear: the rim is the bulk of the population. Right, log–log: we plot <em>k</em>+1, because on a log axis <em>k</em> = 0 does not exist and the seventeen castaways would silently disappear — the same trap as loading the edge list without the roster.</figcaption>
+      </figure>
+
+      <h2>Checking the snapshot against live Wikipedia</h2>
+
+      <p>Every claim above rests on the frozen snapshot, and "this character has no links" is exactly the kind of claim a harvesting bug would produce. Internal links live in the wiki-source as <code>[[Page name]]</code>, which is how the course built the edge list, so we re-harvested a few articles ourselves and compared.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Article</th><th>[[links]] in source</th><th>Inside the roster</th><th>In the snapshot</th><th>Agreeing</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Spider-Man</td><td>700</td><td>9</td><td>9</td><td>9</td></tr>
+            <tr><td>Miracleman</td><td>440</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>Baymax</td><td>120</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>Toxyn</td><td>22</td><td>2</td><td>2</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The snapshot holds. The castaways are genuinely uncited by their own universe, and Spider-Man's nine outgoing links are really nine.</p>
+
+      <blockquote>Wikipedia's Marvel universe is not held together by who matters. It is held together by who had a reason to write the sentence.</blockquote>
 
       <h2>Caveats</h2>
+
       <ul>
-        <li>The network is a snapshot of Wikipedia, not of the Marvel universe: an edge means an editor wrote a link, which tracks fame and article length as much as it tracks the story.</li>
-        <li>Category membership is a human judgement call — who counts as a &ldquo;superhero&rdquo; is already an analysis decision made before we saw the data.</li>
-        <li><span class="todo">todo</span> Anything our own method assumed away.</li>
+        <li>This is a network of <em>articles</em>, not of characters. An edge means an editor wrote a link, which tracks fame, article length and editorial habit at least as much as it tracks the stories.</li>
+        <li>The category boundary is doing a lot of work. Every "0" in the last column of the island table means "no link to another page <em>inside this 303-character category</em>" — those articles link to plenty of Marvel pages that are not superheroes.</li>
+        <li>The four-way split of the castaways is our reading of seventeen opening sentences, not a measurement. Someone else might group them differently.</li>
+        <li>ρ = 0.82 between size and degree is a correlation with no direction attached. Long articles may attract links, or getting linked may be what makes an article grow.</li>
+        <li>Polarity is undefined for the castaways (0/0), so they are absent from Fig. 3 by construction.</li>
       </ul>
 
       <h2>Reproduce it</h2>
-      <p><span class="todo">todo</span> Link the notebook once it is in the repo — <code>notebooks/week1.ipynb</code> — and note the exact package versions. Data: the week-1 release from the course data page (frozen snapshot, 2026-08-26).</p>
+
+      <p>Data: the week-1 release from the course data page, frozen 2026-08-26 — 303 nodes, 1,784 directed edges. Everything in this post comes out of one script:</p>
+
+      <pre><code>python analysis_week1.py          # the snapshot: figures and numbers
+python analysis_week1.py --wiki   # plus the live Wikipedia API checks</code></pre>
+
+      <p>Built with pandas, NetworkX and Matplotlib. The API calls send a <code>User-Agent</code> naming the client, because Wikipedia answers 403 without one — and back off on 429, because it answers that too if you go too fast.</p>
 
     </div>
   </div>
